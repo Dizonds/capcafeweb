@@ -1,13 +1,231 @@
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+/* ==============================================================================
+   CAP CAFE - DESIGN TOKENS & GLOBAL CSS
+   Brand aesthetic: Warm cream/beige walls, natural light wood, off-white
+   furniture, warm ambient lighting, espresso text, burnt orange brand accents.
+   ============================================================================== */
+
+:root {
+  /* Brand Palette */
+  --cap-orange: #A64216;
+  --cap-orange-dark: #84300F;
+  --cap-orange-light: #C95A2B;
+  --cap-orange-subtle: rgba(166, 66, 22, 0.08);
+
+  --espresso: #34251D;
+  --espresso-dark: #221711;
+  --espresso-soft: #4A3728;
+  
+  --cream: #F6F0E6;
+  --cream-light: #FBF8F2;
+  --latte: #E7D8C5;
+  --latte-light: #EFE6DA;
+  --warm-white: #FFFDF8;
+  --muted-brown: #806B5B;
+  --muted-brown-light: #A59281;
+  --gold: #C8954C;
+
+  /* Architectural Accents */
+  --border-subtle: rgba(128, 107, 91, 0.18);
+  --border-medium: rgba(128, 107, 91, 0.32);
+  --card-bg: rgba(255, 253, 248, 0.85);
+
+  /* Typography */
+  --font-serif: 'Italiana', 'Cinzel', 'Playfair Display', Georgia, serif;
+  --font-sans: 'Outfit', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+
+  /* Fluid Spacing Scale */
+  --space-xs: clamp(0.5rem, 1vw, 0.75rem);
+  --space-sm: clamp(0.75rem, 1.5vw, 1rem);
+  --space-md: clamp(1.25rem, 2.5vw, 2rem);
+  --space-lg: clamp(2rem, 4vw, 3.5rem);
+  --space-xl: clamp(3.5rem, 7vw, 6rem);
+  --space-2xl: clamp(5rem, 10vw, 9rem);
+
+  /* Transitions */
+  --transition-fast: 0.2s cubic-bezier(0.2, 0.8, 0.2, 1);
+  --transition-smooth: 0.4s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+/* Reset & Box Sizing */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  font-size: 16px;
+  background-color: var(--cream);
+  color: var(--espresso);
+}
+
+body {
+  font-family: var(--font-sans);
+  font-weight: 400;
+  line-height: 1.6;
+  color: var(--espresso);
+  background-color: var(--cream);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  position: relative;
+  overflow-x: hidden;
+  background-image: 
+    radial-gradient(circle at 15% 20%, rgba(255, 253, 248, 0.6) 0%, transparent 40%),
+    radial-gradient(circle at 85% 60%, rgba(231, 216, 197, 0.4) 0%, transparent 50%);
+  background-attachment: fixed;
+}
+
+/* Subtly textured cream wall layer */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 9999;
+  opacity: 0.025;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+}
+
+/* Typography Defaults */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-serif);
+  color: var(--espresso);
+  font-weight: 400;
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+}
+
+p {
+  color: var(--espresso-soft);
+  font-size: clamp(0.95rem, 1.2vw, 1.05rem);
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+  transition: color var(--transition-fast);
+}
+
+button {
+  font-family: var(--font-sans);
+  cursor: pointer;
+  border: none;
+  background: none;
+}
+
+img {
+  max-width: 100%;
+  display: block;
+  height: auto;
+}
+
+/* Skip link for accessibility */
+.skip-link {
+  position: absolute;
+  top: -60px;
+  left: 20px;
+  background: var(--espresso);
+  color: var(--warm-white);
+  padding: 10px 18px;
+  z-index: 10000;
+  font-weight: 500;
+  border-radius: 4px;
+  transition: top var(--transition-fast);
+}
+.skip-link:focus {
+  top: 15px;
+}
+
+/* Focus styles for keyboard accessibility */
+:focus-visible {
+  outline: 2px solid var(--cap-orange);
+  outline-offset: 3px;
+}
+
+/* Section Containers & Common Layouts */
+.section-container {
+  width: 100%;
+  max-width: 1240px;
+  margin: 0 auto;
+  padding: 0 clamp(1.25rem, 4vw, 2.5rem);
+}
+
+.eyebrow {
+  display: inline-block;
+  font-family: var(--font-sans);
+  font-size: clamp(0.7rem, 1vw, 0.82rem);
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--cap-orange);
+  margin-bottom: 0.85rem;
+}
+
+.section-title {
+  font-size: clamp(2rem, 4.2vw, 3.4rem);
+  margin-bottom: 1.25rem;
+}
+
+/* Buttons */
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.65rem;
+  background-color: var(--cap-orange);
+  color: var(--warm-white);
+  padding: 0.85rem 1.85rem;
+  font-size: 0.92rem;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  border-radius: 2px;
+  transition: background-color var(--transition-fast), transform var(--transition-fast);
+}
+.btn-primary:hover {
+  background-color: var(--cap-orange-dark);
+  transform: translateY(-1px);
+}
+
+.btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.65rem;
+  background-color: transparent;
+  color: var(--espresso);
+  padding: 0.85rem 1.85rem;
+  font-size: 0.92rem;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  border: 1px solid var(--espresso-soft);
+  border-radius: 2px;
+  transition: all var(--transition-fast);
+}
+.btn-secondary:hover {
+  background-color: var(--espresso);
+  color: var(--warm-white);
+  transform: translateY(-1px);
+}
+
+/* Thin Editorial Divider */
+.editorial-line {
+  width: 100%;
+  height: 1px;
+  background-color: var(--border-subtle);
+  border: none;
+}
+
+/* Respect Reduced Motion */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
 }
